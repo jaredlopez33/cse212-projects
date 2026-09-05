@@ -13,7 +13,18 @@ public static class Arrays
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
 
-        return []; // replace this return statement with your own
+        //Step 1: Create an array of doubles with the specified length.
+        //Step 2: Use a for loop to iterate from 0 to length - 1 to calculate and assign each multiple.
+        //Step 3: COmpute the multiples by multiplying the number with the index + 1.
+        //Step 4: Store the calculated multiple into the corresponding array index.
+        //Step 5: Return the resulting array.
+
+        double[] result = new double[length];
+        for (int i = 0; i < length; i++)
+        {
+            result[i] = number * (i + 1);
+        }
+        return result; // replace this return statement with your own
     }
 
     /// <summary>
@@ -29,5 +40,28 @@ public static class Arrays
         // Remember: Using comments in your program, write down your process for solving this problem
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
+
+        // Step 1: Check if the list is null, empty, or if the rotation amount requires no change.
+        // Step 2: Normalize the rotation amount using modulo in case it equals or exceeds the list count.
+        // Step 3: Determine the starting index for the slice that will move to the front of the list (data.Count - amount).
+        // Step 4: Use GetRange to extract the tail portion that needs to be shifted to the front.
+        // Step 5: Use GetRange to extract the head portion of the list that will be shifted to the back.
+        // Step 6: Clear the original list contents to prepare for rebuilding it in the rotated order.
+        // Step 7: Add the tail elements first, followed by the head elements, completing the right rotation.
+
+        if (data == null || data.Count == 0 || amount <= 0)
+        {
+            return; // No rotation needed
+        }
+
+        amount = amount % data.Count;
+        if (amount == 0) return; // No rotation needed
+        
+        int splitIndex = data.Count - amount;
+        List<int>  tail = data.GetRange(splitIndex, amount);
+        List<int> head = data.GetRange(0, splitIndex);
+        data.Clear();
+        data.AddRange(tail);
+        data.AddRange(head); 
     }
 }
