@@ -8,20 +8,16 @@ public class BinarySearchTree : IEnumerable<int>
     /// Insert a new node in the BST.
     /// </summary>
     public void Insert(int value)
+{
+    if (_root is null)
     {
-        // Create new node
-        Node newNode = new(value);
-        // If the list is empty, then point both head and tail to the new node.
-        if (_root is null)
-        {
-            _root = newNode;
-        }
-        // If the list is not empty, then only head will be affected.
-        else
-        {
-            _root.Insert(value);
-        }
+        _root = new Node(value);
     }
+    else
+    {
+        _root.Insert(value); 
+    }
+}
 
     /// <summary>
     /// Check to see if the tree contains a certain value
@@ -38,8 +34,12 @@ public class BinarySearchTree : IEnumerable<int>
     /// </summary>
     IEnumerator IEnumerable.GetEnumerator()
     {
-        // call the generic version of the method
-        return GetEnumerator();
+        var numbers = new List<int>();
+        TraverseBackward(_root, numbers);
+        foreach (var number in numbers)
+        {
+        yield return number;
+        }
     }
 
     /// <summary>
@@ -80,7 +80,12 @@ public class BinarySearchTree : IEnumerable<int>
 
     private void TraverseBackward(Node? node, List<int> values)
     {
-        // TODO Problem 3
+        if (node is not null)
+        {
+        TraverseBackward(node.Right, values);
+        values.Add(node.Data);
+        TraverseBackward(node.Left, values);
+        }
     }
 
     /// <summary>
